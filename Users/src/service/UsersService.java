@@ -1,5 +1,8 @@
 package service;
 
-public interface UsersService {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+public interface UsersService {
+	public void emailCheck(HttpServletRequest request, HttpServletResponse response);
 }

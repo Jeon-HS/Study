@@ -37,9 +37,22 @@ public class UsersController extends HttpServlet {
 			response.sendRedirect("./");
 		}
 		//단순 페이지 이동은 포워딩
-		else if(command.equals("/user/main")) {
+		else if(command.equals("/users/main")) {
 			RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("../member/main.jsp");
+			dispatcher.forward(request, response);
+		}
+		else if(command.equals("/users/signup")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/signup.jsp");
+			dispatcher.forward(request, response);
+		}
+		else if(command.equals("/users/emailcheck")) {
+			System.out.println("요청 도달");
+					
+			usersService.emailCheck(request, response);
+					
+			RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("../member/emailcheck.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
