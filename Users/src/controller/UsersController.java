@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import service.UsersServiceImpl;
 
 
 @WebServlet({"/index.html","/users/*"})
+@MultipartConfig(location="c:\\upload")
 public class UsersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,12 +44,20 @@ public class UsersController extends HttpServlet {
 				request.getRequestDispatcher("../member/main.jsp");
 			dispatcher.forward(request, response);
 		}
-		else if(command.equals("/users/signup")) {
+		else if(command.equals("/users/signup") && method.equals("GET") ) {
+			
+			usersService.signup(request, response);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/signup.jsp");
 			dispatcher.forward(request, response);
 		}
+		else if(command.equals("/users/signup") && method.equals("POST")) {
+			//회원가입을 처리해주는 메소드 호출
+			usersService.signup(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/signupresult.jsp");
+			dispatcher.forward(request, response);
+		}
 		else if(command.equals("/users/emailcheck")) {
-			System.out.println("요청 도달");
+			//System.out.println("요청 도달");
 					
 			usersService.emailCheck(request, response);
 					

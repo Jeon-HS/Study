@@ -4,8 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import dao.UsersDao;
+import domain.Users;
 
 public class UsersServiceImpl implements UsersService {
 		//Service 에서 사용할 UsersDao 변수
@@ -55,6 +57,49 @@ public class UsersServiceImpl implements UsersService {
 				
 			//request에 저장
 			request.setAttribute("result", object);
+			
+		}
+
+		@Override
+		public void signup(HttpServletRequest request, HttpServletResponse response) {
+			
+			try {
+				//파라미터 읽기
+				//파라미터 이름이 signup.jsp 파일에 있는 form 안에있는
+				//요소들의 name과 일치해야합니다.
+				request.setCharacterEncoding("utf-8");
+				String email = request.getParameter("user_email");
+				String password = request.getParameter("user_password");
+				String name = request.getParameter("user_name");
+				String phone = request.getParameter("user_phone");
+				
+				//DAO 파라미터 만들기
+				Users users = new Users();
+				users.setUser_email(email);
+				//users.setUser_password(password);
+				//암호화해서 저장
+				users.setUser_password(BCrypt.hashpw(password, BCrypt.gensalt()));
+				users.setUser_name(name);
+				users.setUser_phone(phone);
+				
+				//Dao 메소드 호출
+				int result = usersDao.signup(users);
+				
+				//결과를 저장
+				JSONObject object = new JSONObject();
+				if(result > 0) {
+					object.put("result", true);
+				}else {
+					object.put("result", false);
+				}
+				
+				request.setAttribute("result", object);
+				
+				
+			}catch(Exception e) {
+				System.out.println("service : " + e.getMessage() );
+				e.printStackTrace();
+			}
 			
 		}
 }
