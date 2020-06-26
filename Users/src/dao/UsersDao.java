@@ -21,7 +21,7 @@ public class UsersDao extends AbstractDao {
 			//sql 생성
 			//email을 대문자로 변경해서 비교
 			pstmt = con.prepareStatement(
-				"select user_email from user where upper(user_email) = ?");
+				"select user_email from users where upper(user_email) = ?");
 			//데이터 바인딩
 			pstmt.setString(1, email.toUpperCase());
 			//SQL 실행
