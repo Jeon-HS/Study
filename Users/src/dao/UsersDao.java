@@ -61,4 +61,36 @@ public class UsersDao extends AbstractDao {
 		return result;
 	}
 	
+	//로그인 처리를 위한 메소드
+	public Users login(String email) {
+		//System.out.println("DAO의 email : " + email);
+		
+		//없는 아이디인 경우는 null을 리턴
+		Users user =null;
+		connect();
+		try {
+			//SQL 만들기
+			//Users 테이블에서 id를 가지고 데이터를 찾아오기
+			pstmt = con.prepareStatement("select * from users where user_email = ?");
+			//SQL 바인딩
+			pstmt.setString(1, email);
+			//SQL 실행
+			rs = pstmt.executeQuery();
+			//데이터 읽어서 저장
+			if(rs.next()) {
+				user = new Users();
+				user.setUser_email("user_email");
+				user.setUser_password("user_password");
+				user.setUser_name("user_name");
+				user.setUser_phone("user_phone");
+			}
+		}catch(Exception e) {
+			System.out.println("DAO: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		close();
+		return user;
+	}
+	
 }

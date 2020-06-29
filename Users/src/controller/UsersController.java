@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.Users;
 import service.UsersService;
 import service.UsersServiceImpl;
 
@@ -65,6 +66,29 @@ public class UsersController extends HttpServlet {
 				request.getRequestDispatcher("../member/emailcheck.jsp");
 			dispatcher.forward(request, response);
 		}
+		else if(command.equals("/users/login") && method.equals("GET")) {
+			RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("../member/login.jsp");
+			dispatcher.forward(request, response);
+		}
+		else if(command.equals("/users/login") && method.equals("POST")) {
+			//System.out.println("요청도착");
+			//로그인 처리를 위한 서비스 메소드 호출
+			//작업을 처리하는 경우에는 서비스의 메소드를 호출하는 것이고
+			//단순 페이지 이동은 서버스의 메소드를 호출하지 않음
+			//정보 수정의 경우는 상세 데이터를 가져오고 수정
+			usersService.login(request, response);
+			RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("../member/loginresult.jsp");
+			dispatcher.forward(request, response);
+		}
+		else if(command.equals("/users/proxy")) {
+			RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("../member/proxy.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+	
 	}
 
 	

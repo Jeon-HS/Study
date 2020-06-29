@@ -7,6 +7,7 @@
 <title>유저 관리</title>
 </head>
 <body>
+	 
 	<%
 		dao.UsersDao usersDao = dao.UsersDao.sharedInstance();
 		domain.Users users = new domain.Users();
@@ -17,6 +18,7 @@
 	
 		System.out.println(usersDao.signup(users));
 	%>
+	 
 
 	<%
 	dao.UsersDao userDao = dao.UsersDao.sharedInstance();
@@ -28,5 +30,6 @@
 	전자 정보 프레임워크가 만들어주는 프로젝트에서 index.jsp에 보면
 	이런 코드가 존재합니다.-->
 	<jsp:forward page="users/main"></jsp:forward>
+	<jsp:forward page="users/login"></jsp:forward>
 </body>
 </html>
